@@ -385,11 +385,13 @@ class MultipartUploader:
         client,
         config,
         osutil,
-        executor_cls=concurrent.futures.ThreadPoolExecutor,
+        executor_cls=None,
     ):
         self._client = client
         self._config = config
         self._os = osutil
+        if executor_cls is None:
+            executor_cls = concurrent.futures.ThreadPoolExecutor
         self._executor_cls = executor_cls
 
     def _extra_upload_part_args(self, extra_args):
@@ -523,11 +525,13 @@ class MultipartDownloader:
         client,
         config,
         osutil,
-        executor_cls=concurrent.futures.ThreadPoolExecutor,
+        executor_cls=None,
     ):
         self._client = client
         self._config = config
         self._os = osutil
+        if executor_cls is None:
+            executor_cls = concurrent.futures.ThreadPoolExecutor
         self._executor_cls = executor_cls
         self._ioqueue = ShutdownQueue(self._config.max_io_queue)
 
